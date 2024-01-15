@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bn5fux5fg04bm"]
+
+[ext_resource type="Texture2D" uid="uid://ljrmmoy45ojd" path="res://assets/img/fire_controler.png" id="1_clqyi"]
+
+[resource]
+resource_local_to_scene = true
+transparency = 1
+albedo_color = Color(1, 0.368627, 0.0392157, 1)
+albedo_texture = ExtResource("1_clqyi")
+emission_enabled = true
+emission = Color(1, 0.462745, 0.0156863, 1)
+emission_energy_multiplier = 3.0
+disable_receive_shadows = true

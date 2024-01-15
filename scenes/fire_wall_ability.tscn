@@ -1,0 +1,234 @@
+[gd_scene load_steps=21 format=3 uid="uid://b42vt4iu2qhfe"]
+
+[ext_resource type="Script" path="res://scripts/fire_controller.gd" id="1_ariiu"]
+[ext_resource type="Texture2D" uid="uid://ljrmmoy45ojd" path="res://assets/img/fire_controler.png" id="2_uyuu2"]
+[ext_resource type="Material" uid="uid://bn5fux5fg04bm" path="res://assets/fire_wall_ability.tres" id="3_quib6"]
+[ext_resource type="Script" path="res://scripts/curve.gd" id="4_khuk4"]
+[ext_resource type="Shader" uid="uid://dm1mm8sdl1s4l" path="res://assets/fire_wall2.tres" id="5_ela21"]
+[ext_resource type="Shader" uid="uid://b55vdyphdp4fx" path="res://assets/fire_wall.tres" id="6_j02pb"]
+[ext_resource type="Animation" uid="uid://gy728ck5s7wr" path="res://assets/animations/fire_path.res" id="7_1m3eh"]
+[ext_resource type="Animation" uid="uid://wcpbbpjx0lf7" path="res://assets/animations/fire_wall.res" id="8_4onr8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3s0x5"]
+resource_local_to_scene = true
+transparency = 1
+diffuse_mode = 3
+specular_mode = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.580392, 0.239216, 1)
+albedo_texture = ExtResource("2_uyuu2")
+emission_enabled = true
+emission = Color(1, 0.14902, 0.0588235, 1)
+emission_energy_multiplier = 5.0
+refraction_scale = -0.1
+disable_receive_shadows = true
+billboard_mode = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h2d40"]
+size = Vector2(0.3, 0.3)
+orientation = 2
+
+[sub_resource type="Curve" id="Curve_kag5g"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_avypk"]
+curve = SubResource("Curve_kag5g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6ehhd"]
+resource_local_to_scene = true
+emission_shape_scale = Vector3(0.05, 0.05, 0.05)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0.1)
+linear_accel_max = 1.0
+tangential_accel_max = 0.1
+scale_min = 0.0
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_avypk")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qurry"]
+material = ExtResource("3_quib6")
+size = Vector2(1, 1)
+orientation = 2
+
+[sub_resource type="Curve3D" id="Curve3D_gjecy"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6q88q"]
+resource_local_to_scene = true
+transparency = 1
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 0.486275, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.2, 0, 1)
+disable_receive_shadows = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkd3d"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("5_ela21")
+shader_parameter/fire_power = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fv8qx"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_nkd3d")
+shader = ExtResource("6_j02pb")
+shader_parameter/fire_power = 0.0
+
+[sub_resource type="Animation" id="Animation_f51q7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterBody3D/MeshInstance3D:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.580392, 0.239216, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterBody3D/GPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path3D/fire_path:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.486275, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Path3D/fire_path:material:emission_enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path3D/fire_wall:material:shader_parameter/fire_power")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Path3D/fire_wall:material:next_pass:shader_parameter/fire_power")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pimyr"]
+_data = {
+"RESET": SubResource("Animation_f51q7"),
+"fire_path": ExtResource("7_1m3eh"),
+"fire_wall": ExtResource("8_4onr8")
+}
+
+[node name="Fire_wall_ability" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+axis_lock_linear_y = true
+script = ExtResource("1_ariiu")
+SPEED = 6.0
+max_distance = 8.0
+point_per_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54358, 0)
+material_override = SubResource("StandardMaterial3D_3s0x5")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_h2d40")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.541255, -0.0104542)
+amount = 10
+lifetime = 1.5
+speed_scale = 0.7
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_6ehhd")
+draw_pass_1 = SubResource("PlaneMesh_qurry")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_gjecy")
+script = ExtResource("4_khuk4")
+smoothnes = 0.3
+
+[node name="fire_path" type="CSGPolygon3D" parent="Path3D"]
+cast_shadow = 0
+polygon = PackedVector2Array(-0.1, 0, -0.1, 0, 0.1, 0, 0.1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.3
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("StandardMaterial3D_6q88q")
+
+[node name="fire_wall" type="CSGPolygon3D" parent="Path3D"]
+cast_shadow = 0
+use_collision = true
+collision_layer = 2
+collision_mask = 2
+polygon = PackedVector2Array(0, 0, 0, 1.5, 0, 1.5, 0, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.3
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_fv8qx")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pimyr")
+}
+
+[connection signal="timeout" from="Timer" to="CharacterBody3D" method="_on_timer_timeout"]

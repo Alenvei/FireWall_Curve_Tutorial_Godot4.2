@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkb1dfp7374bn"]
+
+[ext_resource type="Script" path="res://curve.gd" id="1_l36r3"]
+[ext_resource type="Shader" uid="uid://b3o37c43hj7cl" path="res://fire_wall.tres" id="2_u6cnq"]
+
+[sub_resource type="Curve3D" id="Curve3D_y8syd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4vfc4"]
+render_priority = 0
+shader = ExtResource("2_u6cnq")
+
+[node name="Path3D" type="Path3D"]
+curve = SubResource("Curve3D_y8syd")
+script = ExtResource("1_l36r3")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+polygon = PackedVector2Array(0, 0, 0, 2, 0, 2, 0, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.36
+path_simplify_angle = 0.0
+path_rotation = 1
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.09
+path_joined = false
+material = SubResource("ShaderMaterial_4vfc4")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="."]
+flip_faces = true
+polygon = PackedVector2Array(0, 0, 0, 2, 0, 2, 0, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.36
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_4vfc4")

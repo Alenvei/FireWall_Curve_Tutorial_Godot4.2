@@ -1,0 +1,127 @@
+[gd_scene load_steps=9 format=3 uid="uid://v7lnnxih4qtm"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_d68ee"]
+[ext_resource type="Texture2D" uid="uid://i02pe5s57e6e" path="res://assets/img/crosshair.png" id="2_c2ub0"]
+[ext_resource type="Script" path="res://scripts/fire_wall.gd" id="2_hydk2"]
+[ext_resource type="PackedScene" uid="uid://b42vt4iu2qhfe" path="res://scenes/fire_wall_ability.tscn" id="3_at0ac"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_isj8u"]
+radius = 0.258125
+height = 1.03615
+
+[sub_resource type="Animation" id="Animation_2xrrd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/ouch_indicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_u1ypj"]
+resource_name = "ouch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/ouch_indicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jf7dk"]
+_data = {
+"RESET": SubResource("Animation_2xrrd"),
+"ouch": SubResource("Animation_u1ypj")
+}
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_d68ee")
+
+[node name="GridMap" type="GridMap" parent="."]
+transform = Transform3D(0.999759, 0, 0.021937, 0, 1, 0, -0.021937, 0, 0.999759, 0, -0.5, 0)
+cell_size = Vector3(0.1, 2, 0.1)
+data = {
+"cells": PackedInt32Array(65535, 65523, 0, 0, 65523, 2)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_isj8u")
+
+[node name="fire_wall" type="Node" parent="."]
+script = ExtResource("2_hydk2")
+fire_wall = ExtResource("3_at0ac")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.395617, 0)
+
+[node name="Pivot" type="Node3D" parent="Head"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.391912, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -5)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ouch_indicator" type="ColorRect" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.309804, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("2_c2ub0")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_isj8u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jf7dk")
+}
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
