@@ -1,10 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://b42vt4iu2qhfe"]
+[gd_scene load_steps=19 format=3 uid="uid://b42vt4iu2qhfe"]
 
 [ext_resource type="Script" path="res://scripts/fire_controller.gd" id="1_ariiu"]
 [ext_resource type="Texture2D" uid="uid://ljrmmoy45ojd" path="res://assets/img/fire_controler.png" id="2_uyuu2"]
 [ext_resource type="Material" uid="uid://bn5fux5fg04bm" path="res://assets/fire_wall_ability.tres" id="3_quib6"]
 [ext_resource type="Script" path="res://scripts/curve.gd" id="4_khuk4"]
-[ext_resource type="Shader" uid="uid://dm1mm8sdl1s4l" path="res://assets/fire_wall2.tres" id="5_ela21"]
 [ext_resource type="Shader" uid="uid://b55vdyphdp4fx" path="res://assets/fire_wall.tres" id="6_j02pb"]
 [ext_resource type="Animation" uid="uid://gy728ck5s7wr" path="res://assets/animations/fire_path.res" id="7_1m3eh"]
 [ext_resource type="Animation" uid="uid://wcpbbpjx0lf7" path="res://assets/animations/fire_wall.res" id="8_4onr8"]
@@ -65,16 +64,9 @@ emission_enabled = true
 emission = Color(1, 0.2, 0, 1)
 disable_receive_shadows = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkd3d"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("5_ela21")
-shader_parameter/fire_power = 0.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fv8qx"]
 resource_local_to_scene = true
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_nkd3d")
 shader = ExtResource("6_j02pb")
 shader_parameter/fire_power = 0.0
 
@@ -131,7 +123,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Path3D/fire_wall:material:shader_parameter/fire_power")
+tracks/4/path = NodePath("Path3D/fire_wall:material:next_pass:shader_parameter/fire_power")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -143,7 +135,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Path3D/fire_wall:material:next_pass:shader_parameter/fire_power")
+tracks/5/path = NodePath("Path3D/fire_wall:material:shader_parameter/fire_power")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {

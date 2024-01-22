@@ -97,7 +97,7 @@ input_name = "normal"
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx, unshaded;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx, unshaded;
 
 uniform sampler2D tex_frg_3;
 uniform float fire_power : hint_range(0, 7.5, 0.00999999977648);
@@ -198,6 +198,7 @@ void fragment() {
 
 }
 "
+modes/cull = 2
 flags/unshaded = true
 nodes/vertex/2/node = SubResource("VisualShaderNodeInput_0w7s1")
 nodes/vertex/2/position = Vector2(-880, 220)
